@@ -1,2 +1,2 @@
 #!/bin/bash
-echo -E $CFILE -o c
+export -E $CFILE -o c
