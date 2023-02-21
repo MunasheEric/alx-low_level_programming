@@ -1,3 +1,1 @@
-A README.md file, at the root of the folder of the project is mandatory
-
-
+This file is not empty. My first README.md file
