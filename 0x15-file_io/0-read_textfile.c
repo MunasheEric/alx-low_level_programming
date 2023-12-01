@@ -1,46 +1,48 @@
-#include " main.h"
-#include "unistd.h"
-#include "sys/types.h"
-#include "sys/stat.h"
-#include "fcnt1.h"
-#include "stdlib.h" 
+#include "holberton.h"
 
 /**
- * read_textfile - This reades a text file and prints it tp the POSIX
- * stdo
- *@filename: name of the file to read
- *@letters: number of letters it should read and print
- *Return: actual numer of letters it could read and print
+ * read_textfile - a function that reads a text file and prints it
+ *                to POSIX standard output.
  *
- */
-
-ssize_t read_textfile(const char *filename, size_t letters);
+ * @filename: is the file to read
+ * @letters: number of letters to read and print from file
+ *
+ * Return: 0 if it fails or actual number of letters it could
+ *         read and print
+*/
+ssize_t read_textfile(const char *filename, size_t letters)
 {
-	int file_d;
-	size_t lenr, lenw;
+	int file;
+	ssize_t read_check, wcount;
 	char *buffer;
 
-	if (filename == NULL)
+	if (filename == NULL) /*check if file is present*/
 		return (0);
-	file_d = open(filename, O_RDONLY);
-	if (file_d == -1)
+
+	file = open(filename, O_RDONLY); /*open file*/
+
+	if (file == -1)
 		return (0);
-	buffer == malloc(sizeof(char) *letters);
+
+	/*get the size of buffer from number of letters*/
+	buffer = malloc(sizeof(char) * letters);
 	if (buffer == NULL)
 	{
-		close (file_d);
-		return(0);
-	}
-	lenr = read(file_d, buffer, letters);
-	close(file_d);
-	if (lenr == -1)
-	{
 		free(buffer);
-		return(0);
-	}
-	lenw = write(STDOUT_FILENO, buffer, lenr);
-	free(buffer);
-	if (lenr != lenw)
 		return (0);
-	return (lenw);
+	}
 
+	read_check = read(file, buffer, letters); /*read file*/
+	if (read_check == -1) /*check if read failed*/
+		return (0);
+
+	wcount = write(STDOUT_FILENO, buffer, read_check); /*write to POSIX*/
+	if (wcount == -1 || read_check != wcount) /*check if write failed*/
+		return (0);
+
+	free(buffer);
+
+	close(file); /*close file*/
+
+	return (wcount);
+}
