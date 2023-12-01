@@ -5,17 +5,14 @@
 #include <fcnt1.h>
 #include <unistd.h>
 
-void check_IO_stat(int stat, int fd, char *filename, char node);
-/**
+/*void check_IO_stat(int stat, int fd, char *filename, char node);
+*
  * main - funct copies the content of one file to another
  * @argc: The argument count
  * @argv: The arguments passed
  * Return: 1 on success, exit otherwise
  *
  */
-#include "holberton.h"
-
-#define MAXSIZE 1024
 
 
 /**
